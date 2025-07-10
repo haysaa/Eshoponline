@@ -1,0 +1,59 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<h1>@Model.ProductName</h1>
+
+<div class="row">
+
+    <!-- Ürün görseli (varsa) -->
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="~/images/@Model.ImageUrl"
+                 alt="@Model.ProductName"
+                 class="img-fluid rounded mb-3" />
+        }
+    </div>
+
+    <!-- Temel bilgiler -->
+    <div class="col-md-8">
+        <table class="table table-borderless">
+            <tr>
+                <th scope="row">Description</th>
+                <td>@Model.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Price</th>
+                <td>@Model.Price.ToString("C")</td>
+            </tr>
+            <tr>
+                <th scope="row">Stock</th>
+                <td>@Model.Stock</td>
+            </tr>
+            <tr>
+                <th scope="row">Category</th>
+                <td>@Model.Category?.CategoryName</td>
+            </tr>
+        </table>
+
+        <!-- Sepete ekle -->
+        <form asp-action="Add"
+              asp-controller="Cart"
+              method="post" class="d-inline">
+            <input type="hidden" name="productId"
+                   value="@Model.ProductId" />
+            <button type="submit"
+                    class="btn btn-success">
+                Add to Cart
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-outline-dark">
+        Back to List
+    </a>
+</div>
